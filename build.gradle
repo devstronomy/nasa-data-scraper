@@ -1,0 +1,78 @@
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.jooq:jooq-codegen:3.11.5'
+        classpath 'mysql:mysql-connector-java:8.0.13'
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.0.RELEASE")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+group 'com.devstronomy'
+version '0.1-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.jooq:jooq:3.11.5'
+    compile 'com.opencsv:opencsv:4.3.2'
+    compile 'mysql:mysql-connector-java:8.0.13'
+    compile 'org.springframework.boot:spring-boot-starter-jdbc:2.1.0.RELEASE'
+}
+
+task generateJOOQ {
+    group 'Generate'
+    description 'Generates JOOQ code'
+
+    doLast {
+        def writer = new StringWriter()
+        new groovy.xml.MarkupBuilder(writer)
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.11.0.xsd') {
+            jdbc() {
+                // TODO: do not hardcode DB URL and credentials
+                driver('com.mysql.cj.jdbc.Driver')
+                url('jdbc:mysql://localhost:3306/')
+                user('root')
+                password('root')
+            }
+            generator() {
+                database() {
+                    name('org.jooq.meta.mysql.MySQLDatabase')
+                    inputSchema('devstronomy')
+                    includes('.*')
+                    excludes('')
+                    forcedTypes() {
+                        forcedType {
+                            name('BOOLEAN')
+                            expression('has_global_magnetic_field|has_ring_system')
+                            type('TINYINT')
+                        }
+                    }
+                }
+                generate() {
+                }
+                target() {
+                    packageName('com.devstronomy.jooq.generated')
+                    directory('src/main/java')
+                }
+            }
+        }
+
+        def configuration = javax.xml.bind.JAXB.unmarshal(
+                new StringReader(writer.toString()),
+                org.jooq.meta.jaxb.Configuration.class)
+        org.jooq.codegen.GenerationTool.generate(configuration)
+    }
+}
