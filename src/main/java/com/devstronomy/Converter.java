@@ -32,8 +32,8 @@ final class Converter implements CommandLineRunner {
     private static Logger LOG = LoggerFactory.getLogger(Converter.class);
 
     // TODO: do not paths.
-    private static final String PLANETS_CSV_PATH = "../data/csv/planets.csv";
-    private static final String SATELLITES_CSV_PATH = "../data/csv/satellites.csv";
+    private static final String PLANETS_CSV_PATH = "./data/csv/planets.csv";
+    private static final String SATELLITES_CSV_PATH = "./data/csv/satellites.csv";
 
     private final DSLContext jooqDslContext;
 
