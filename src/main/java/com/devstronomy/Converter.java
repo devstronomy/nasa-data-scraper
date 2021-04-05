@@ -9,6 +9,7 @@ import org.jooq.impl.DSL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
@@ -27,12 +28,14 @@ import static com.devstronomy.jooq.generated.Tables.SATELLITE;
  * Reads data from planets CSV file and insert them into the SQL database.
  */
 @Component
+@Order(3)
 final class Converter implements CommandLineRunner {
 
     private static Logger LOG = LoggerFactory.getLogger(Converter.class);
 
     // TODO: do not paths.
-    private static final String PLANETS_CSV_PATH = "./data/csv/planets.csv";
+    private static final String PLANETS_CSV_PATH = "./data/csv/planets2.csv";
+    // private static final String PLANETS_CSV_PATH = "./data/raw/planets2.csv";
     private static final String SATELLITES_CSV_PATH = "./data/csv/satellites.csv";
 
     private final DSLContext jooqDslContext;
