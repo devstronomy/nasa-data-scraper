@@ -25,20 +25,43 @@ import static org.junit.Assert.assertThat;
 
 public class JavaPythonUnitTest {
 
+    private static final String LOCAL_PYTHON = "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python ";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
-        // ProcessBuilder processBuilder = new ProcessBuilder("python", resolvePythonScriptPath("testScript.py"));
-        // ProcessBuilder processBuilder = new ProcessBuilder("C:\\Python27\\python", resolvePythonScriptPath("testScript.py"));
+    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess2() throws Exception {
         // TODO Absolute path for python needed ?
-        ProcessBuilder processBuilder = new ProcessBuilder("C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python", resolvePythonScriptPath("testScript.py"));
+        ProcessBuilder processBuilder = new ProcessBuilder(
+                LOCAL_PYTHON,
+                resolvePythonScriptPath("hello.py"));
 
         processBuilder.redirectErrorStream(true);
 
         Process process = processBuilder.start();
         List<String> results = readProcessOutput(process.getInputStream());
+
+        assertThat("Results should not be empty", results, is(not(empty())));
+        assertThat("Results should contain output of script: ", results, hasItem(containsString("Hello Devstronomers!!")));
+
+        int exitCode = process.waitFor();
+        assertEquals("No errors should be detected", 0, exitCode);
+    }
+
+    @Test
+    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
+        // TODO Absolute path for python needed ?
+        ProcessBuilder processBuilder = new ProcessBuilder(
+                LOCAL_PYTHON,
+                resolvePythonScriptPath("hello.py"));
+
+        processBuilder.redirectErrorStream(true);
+
+        Process process = processBuilder.start();
+        String os = process.getInputStream().toString();
+        List<String> results = readProcessOutput(process.getInputStream());
+
 
         assertThat("Results should not be empty", results, is(not(empty())));
         assertThat("Results should contain output of script: ", results, hasItem(containsString("Hello Devstronomers!!")));
@@ -55,7 +78,7 @@ public class JavaPythonUnitTest {
 
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("python");
-        engine.eval(new FileReader(resolvePythonScriptPath("testScript.py")), context);
+        engine.eval(new FileReader(resolvePythonScriptPath("hello.py")), context);
         assertEquals("Should contain script output: ", "Hello Devstronomers!!", output.toString()
             .trim());
     }
@@ -93,8 +116,8 @@ public class JavaPythonUnitTest {
 
     @Test
     public void givenPythonScript_whenPythonProcessExecuted_thenSuccess() throws ExecuteException, IOException {
-        // String line = "python " + resolvePythonScriptPath("testScript.py");
-        String line = "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python " + resolvePythonScriptPath("testScript.py");
+        // String line = "python " + resolvePythonScriptPath("hello.py");
+        String line = LOCAL_PYTHON + resolvePythonScriptPath("hello.py");
         CommandLine cmdLine = CommandLine.parse(line);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

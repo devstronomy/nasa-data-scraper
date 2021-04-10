@@ -16,18 +16,33 @@ import java.util.List;
 
 /**
  * Reads data from planets https://nssdc.gsfc.nasa.gov/planetary/factsheet/  and insert them into .csv file.
- */
+*/
+
 @Component
 @Order(1)
 final class ConverterScraper implements CommandLineRunner {
 
     private static Logger LOG = LoggerFactory.getLogger(ConverterScraper.class);
 
-    private static final String PLANETS_CSV_PATH = "./data/raw/";
-
+    private static final String PLANETS_FROM_SCRAPER_CSV_PATH = "./data/raw/";
+    private static final String PLANETS_FROM_SCRAPER_CSV_NAME = "planetsFromScraper.csv";
     @Override
     public void run(String... args) {
+        clean();
         scrape();
+    }
+
+    private void clean() {
+        try {
+            File dir = new File(".");
+            String loc = dir.getCanonicalPath() + File.separator + PLANETS_FROM_SCRAPER_CSV_PATH + PLANETS_FROM_SCRAPER_CSV_NAME;
+            new FileWriter(loc, false).close();
+        } catch (
+                FileNotFoundException e) {
+            System.out.println(e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void scrape() {
@@ -121,7 +136,7 @@ final class ConverterScraper implements CommandLineRunner {
 
     public static void addNoSeparatorAndStringToCsv(String string) throws IOException {
         File dir = new File(".");
-        String loc = dir.getCanonicalPath() + File.separator + PLANETS_CSV_PATH + "planets-nasa-export2.csv";
+        String loc = dir.getCanonicalPath() + File.separator + PLANETS_FROM_SCRAPER_CSV_PATH + PLANETS_FROM_SCRAPER_CSV_NAME;
         FileWriter fstream = new FileWriter(loc, true);
         BufferedWriter out = new BufferedWriter(fstream);
         out.write(string);
@@ -130,7 +145,7 @@ final class ConverterScraper implements CommandLineRunner {
 
     public static void addNewLine() throws IOException {
         File dir = new File(".");
-        String loc = dir.getCanonicalPath() + File.separator + PLANETS_CSV_PATH + "planets-nasa-export2.csv";
+        String loc = dir.getCanonicalPath() + File.separator + PLANETS_FROM_SCRAPER_CSV_PATH + PLANETS_FROM_SCRAPER_CSV_NAME;
         FileWriter fstream = new FileWriter(loc, true);
         BufferedWriter out = new BufferedWriter(fstream);
         out.newLine();
@@ -139,7 +154,7 @@ final class ConverterScraper implements CommandLineRunner {
 
     public static void addFirstSeparatorAndStringToCsv(String string) throws IOException {
         File dir = new File(".");
-        String loc = dir.getCanonicalPath() + File.separator + PLANETS_CSV_PATH + "planets-nasa-export2.csv";
+        String loc = dir.getCanonicalPath() + File.separator + PLANETS_FROM_SCRAPER_CSV_PATH + PLANETS_FROM_SCRAPER_CSV_NAME;
         FileWriter fstream = new FileWriter(loc, true);
         BufferedWriter out = new BufferedWriter(fstream);
         out.write(";" + string);
@@ -148,7 +163,7 @@ final class ConverterScraper implements CommandLineRunner {
 
     public static void addComposedStringToCsv(String string) throws IOException {
         File dir = new File(".");
-        String loc = dir.getCanonicalPath() + File.separator + PLANETS_CSV_PATH + "planets-nasa-export2.csv";
+        String loc = dir.getCanonicalPath() + File.separator + PLANETS_FROM_SCRAPER_CSV_PATH + PLANETS_FROM_SCRAPER_CSV_NAME;
         FileWriter fstream = new FileWriter(loc, true);
         BufferedWriter out = new BufferedWriter(fstream);
         out.write(" " + string);

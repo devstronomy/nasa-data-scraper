@@ -22,9 +22,11 @@ final class ConverterTransformer implements CommandLineRunner {
     private static Logger LOG = LoggerFactory.getLogger(ConverterTransformer.class);
 
     private static final String PLANETS_CSV_PATH = "./data/raw/";
+    private static final String PYTHON_SCRIPT_NAME = "planets-nasa-from-scraper-to-transformer.py";
+    private static final String LOCAL_PYTHON = "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python";
 
     @Override
-    public void run(String... args) throws Exception  {
+    public void run(String... args) throws Exception {
         transform();
     }
 
@@ -33,19 +35,15 @@ final class ConverterTransformer implements CommandLineRunner {
 
     private void transform() throws Exception {
         try {
-                // ProcessBuilder processBuilder = new ProcessBuilder("python", resolvePythonScriptPath("testScript.py"));
-                // ProcessBuilder processBuilder = new ProcessBuilder("C:\\Python27\\python", resolvePythonScriptPath("testScript.py"));
-                ProcessBuilder processBuilder = new ProcessBuilder(
-                        "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python",
-                        // resolvePythonScriptPath("testScript.py"));
-                        resolvePythonScriptPath("planets-nasa-transpose2.py"));
-
-                processBuilder.redirectErrorStream(true);
-
-                Process process = processBuilder.start();
-                List<String> results = readProcessOutput(process.getInputStream());
-
-            LOG.info("Transformer processed scraped file planets-nasa-export2.csv ");
+            LOG.info("Creating Process Builder");
+            ProcessBuilder processBuilder = new ProcessBuilder(
+                    LOCAL_PYTHON,
+                    resolvePythonScriptPath(PYTHON_SCRIPT_NAME));
+            processBuilder.redirectErrorStream(true);
+            Process process = processBuilder.start();
+            LOG.info("ProcessBuilder in Transformer Starting ");
+            List<String> results = readProcessOutput(process.getInputStream());
+            LOG.info("ProcesBuilder in Transformer  Finished");
         } catch (
                 FileNotFoundException e) {
             System.out.println(e.getMessage());
@@ -65,6 +63,4 @@ final class ConverterTransformer implements CommandLineRunner {
         File file = new File(PLANETS_CSV_PATH + filename);
         return file.getAbsolutePath();
     }
-
-
 }

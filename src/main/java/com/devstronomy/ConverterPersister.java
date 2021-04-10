@@ -24,23 +24,24 @@ import java.util.Map;
 import static com.devstronomy.jooq.generated.Tables.PLANET;
 import static com.devstronomy.jooq.generated.Tables.SATELLITE;
 
-/**
- * Reads data from planets CSV file and insert them into the SQL database.
- */
+/*
+*
+* Reads data from planets CSV file and insert them into the SQL database.
+*/
+
 @Component
 @Order(3)
-final class Converter implements CommandLineRunner {
+final class ConverterPersister implements CommandLineRunner {
 
-    private static Logger LOG = LoggerFactory.getLogger(Converter.class);
+    private static Logger LOG = LoggerFactory.getLogger(ConverterPersister.class);
 
     // TODO: do not paths.
-    private static final String PLANETS_CSV_PATH = "./data/csv/planets2.csv";
-    // private static final String PLANETS_CSV_PATH = "./data/raw/planets2.csv";
+    private static final String PLANETS_CSV_PATH = "./data/csv/planetsToPersister.csv";
     private static final String SATELLITES_CSV_PATH = "./data/csv/satellites.csv";
 
     private final DSLContext jooqDslContext;
 
-    private Converter(DataSource dataSource) {
+    private ConverterPersister(DataSource dataSource) {
         jooqDslContext = DSL.using(dataSource, SQLDialect.MYSQL);
     }
 
@@ -136,5 +137,4 @@ final class Converter implements CommandLineRunner {
             throw new RuntimeException("Cannot convert string to a number: " + str, nfe);
         }
     }
-
 }

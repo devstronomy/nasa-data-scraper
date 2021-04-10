@@ -11,10 +11,6 @@ import org.python.core.PyException;
 import org.python.core.PyObject;
 import org.python.util.PythonInterpreter;
 
-import javax.script.ScriptContext;
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.SimpleScriptContext;
 import java.io.*;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -25,48 +21,42 @@ import static org.junit.Assert.assertThat;
 
 public class JavaPythonScraperUnitTest {
 
+    private static final String LOCAL_PYTHON = "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python ";
+
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
-        // ProcessBuilder processBuilder = new ProcessBuilder("python", resolvePythonScriptPath("testScript.py"));
-        // ProcessBuilder processBuilder = new ProcessBuilder("C:\\Python27\\python", resolvePythonScriptPath("testScript.py"));
+    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess2() throws Exception {
         ProcessBuilder processBuilder = new ProcessBuilder(
-                "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python",
-                // resolvePythonScriptPath("testScript.py"));
+                LOCAL_PYTHON,
                 resolvePythonScriptPath("testing-transpose.py"));
-
         processBuilder.redirectErrorStream(true);
-
         Process process = processBuilder.start();
         List<String> results = readProcessOutput(process.getInputStream());
 
         assertThat("Results should not be empty", results, is(not(empty())));
         assertThat("Results should contain output of script: ", results, hasItem(containsString(
-                ";MERCURY;VENUS;EARTH;MOON;MARS;JUPITER;SATURN;URANUS;NEPTUNE;PLUTO")));
-
+                "[Unnamed: 0, MERCURY, VENUS, EARTH, MOON, MARS, JUPITER, SATURN, URANUS, NEPTUNE, PLUTO]")));
         int exitCode = process.waitFor();
         assertEquals("No errors should be detected", 0, exitCode);
     }
 
+
     @Test
-    public void givenPythonScriptEngineIsAvailable_whenScriptInvoked_thenOutputDisplayed() throws Exception {
-        StringWriter output = new StringWriter();
-        ScriptContext context = new SimpleScriptContext();
-        context.setWriter(output);
-
-        ScriptEngineManager manager = new ScriptEngineManager();
-        // ScriptEngine engine = manager.getEngineByName("python");
-        ScriptEngine engine = manager.getEngineByName("python");
-        engine.eval(new FileReader(resolvePythonScriptPath("testing-transpose.py")), context);
-        assertEquals("Should contain script output: ",
-                ";MERCURY;VENUS;EARTH;MOON;MARS;JUPITER;SATURN;URANUS;NEPTUNE;PLUTO",
-                output.toString()
-                .trim());
+    public void givenPythonScript_whenPythonProcessInvoked_thenSuccess() throws Exception {
+        ProcessBuilder processBuilder = new ProcessBuilder(
+                LOCAL_PYTHON,
+                resolvePythonScriptPath("testing-transpose.py"));
+        processBuilder.redirectErrorStream(true);
+        Process process = processBuilder.start();
+        List<String> results = readProcessOutput(process.getInputStream());
+        assertThat("Results should not be empty", results, is(not(empty())));
+        assertThat("Results should contain output of script: ", results, hasItem(containsString(
+                "Unnamed: 0, MERCURY, VENUS, EARTH, MOON, MARS, JUPITER, SATURN, URANUS, NEPTUNE, PLUTO")));
+        int exitCode = process.waitFor();
+        assertEquals("No errors should be detected", 0, exitCode);
     }
-
-
 
     @Test
     public void givenPythonInterpreter_whenPrintExecuted_thenOutputDisplayed() {
@@ -101,8 +91,8 @@ public class JavaPythonScraperUnitTest {
 
     @Test
     public void givenPythonScript_whenPythonProcessExecuted_thenSuccess() throws ExecuteException, IOException {
-        // String line = "python " + resolvePythonScriptPath("testScript.py");
-        String line = "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python " + resolvePythonScriptPath("testScript.py");
+        // String line = "python " + resolvePythonScriptPath("hello.py");
+        String line = LOCAL_PYTHON + resolvePythonScriptPath("hello.py");
         CommandLine cmdLine = CommandLine.parse(line);
 
         ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

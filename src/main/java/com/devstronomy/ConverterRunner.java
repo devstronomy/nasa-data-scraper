@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Reads data from planets CSV file and insert them into the SQL database.
  *
  * <p>
- * Runner for {@link Converter}.
+ * Runner for {@link ConverterTransformer}.
  * </p>
  */
 @SpringBootApplication
