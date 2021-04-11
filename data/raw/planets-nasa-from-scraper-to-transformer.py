@@ -1,8 +1,8 @@
 import pandas as pd
 import string
 
-fileNameFromScraper = 'C:\d\vysehrad\fork-nasa-data-scraper\nasa-data-scraper\data\raw\planetsFromScraper.csv'
-fileNameToPersister = 'C:\d\vysehrad\fork-nasa-data-scraper\nasa-data-scraper\data\csv\planetsToPersister.csv'
+fileNameFromScraper = 'C:\\d\\vysehrad\\fork-nasa-data-scraper\\nasa-data-scraper\\data\\raw\\planetsFromScraper.csv'
+fileNameToPersister = 'C:\\d\\vysehrad\\fork-nasa-data-scraper\\nasa-data-scraper\\data\\csv\\planetsToPersister.csv'
 
 f5=open(fileNameFromScraper,"r+")
 input=f5.read()
