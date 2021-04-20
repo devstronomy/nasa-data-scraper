@@ -7,3 +7,9 @@ spring.datasource:
 logging.level:
   root: WARN
   com.devstronomy: INFO
+
+spring:
+  config:
+    activate:
+      on-profile: default
+name: "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python"

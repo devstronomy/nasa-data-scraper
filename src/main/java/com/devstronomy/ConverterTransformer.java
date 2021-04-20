@@ -4,6 +4,7 @@ import org.junit.Rule;
 import org.junit.rules.ExpectedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -21,9 +22,11 @@ final class ConverterTransformer implements CommandLineRunner {
 
     private static Logger LOG = LoggerFactory.getLogger(ConverterTransformer.class);
 
+    @Autowired
+    private YAMLConfig myConfig;
+
     private static final String PLANETS_CSV_PATH = "./data/raw/";
     private static final String PYTHON_SCRIPT_NAME = "planets-nasa-from-scraper-to-transformer.py";
-    private static final String LOCAL_PYTHON = "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python";
 
     @Override
     public void run(String... args) throws Exception {
@@ -37,18 +40,20 @@ final class ConverterTransformer implements CommandLineRunner {
         try {
             LOG.info("Creating Process Builder");
             ProcessBuilder processBuilder = new ProcessBuilder(
-                    LOCAL_PYTHON,
-                    resolvePythonScriptPath(PYTHON_SCRIPT_NAME));
+                    myConfig.getName(),
+                    resolvePythonScriptPath(PYTHON_SCRIPT_NAME)).inheritIO();
             processBuilder.redirectErrorStream(true);
-            Process process = processBuilder.start();
             LOG.info("ProcessBuilder in Transformer Starting ");
-            List<String> results = readProcessOutput(process.getInputStream());
+            Process process = processBuilder.start();
+            process.waitFor();
             LOG.info("ProcesBuilder in Transformer  Finished");
         } catch (
                 FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (NullPointerException e ) {
+            LOG.error("Missing absolute path for python in application.yml file");
         }
     }
 

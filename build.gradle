@@ -26,6 +26,8 @@ repositories {
 }
 
 dependencies {
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
+    compile "org.springframework.boot:spring-boot-configuration-processor"
     compile 'org.jooq:jooq:3.11.5'
     compile 'com.opencsv:opencsv:4.3.2'
     compile 'mysql:mysql-connector-java:8.0.13'
