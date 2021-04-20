@@ -26,6 +26,8 @@ final class ConverterScraper implements CommandLineRunner {
 
     private static final String PLANETS_FROM_SCRAPER_CSV_PATH = "./data/raw/";
     private static final String PLANETS_FROM_SCRAPER_CSV_NAME = "planetsFromScraper.csv";
+    private static final String PATH_TO_PLANETARY_NASA_TABLE = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/";
+
     @Override
     public void run(String... args) {
         clean();
@@ -47,7 +49,7 @@ final class ConverterScraper implements CommandLineRunner {
 
     private void scrape() {
         try {
-            Document doc = Jsoup.connect("https://nssdc.gsfc.nasa.gov/planetary/factsheet/").get();
+            Document doc = Jsoup.connect(PATH_TO_PLANETARY_NASA_TABLE).get();
             System.out.printf("\nWebsite Title: %s\n\n", doc.getElementsByTag("h1"));
             Elements rows = doc.getElementsByTag("tr");
             int i = 0;
