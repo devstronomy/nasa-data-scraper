@@ -12,4 +12,4 @@ spring:
   config:
     activate:
       on-profile: default
-name: "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python"
+name: "<absolute path to python>"
