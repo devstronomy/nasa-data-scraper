@@ -40,7 +40,7 @@ final class ConverterTransformer implements CommandLineRunner {
         try {
             LOG.info("Creating Process Builder");
             ProcessBuilder processBuilder = new ProcessBuilder(
-                    myConfig.getName(),
+                    myConfig.getPathLocalPython(),
                     resolvePythonScriptPath(PYTHON_SCRIPT_NAME)).inheritIO();
             processBuilder.redirectErrorStream(true);
             LOG.info("ProcessBuilder in Transformer Starting ");

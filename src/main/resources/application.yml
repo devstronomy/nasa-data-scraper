@@ -12,4 +12,5 @@ spring:
   config:
     activate:
       on-profile: default
-name: "<absolute path to python>"
+pathLocalPython: "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python"
+nasaPlanetaryDataSheet: "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"

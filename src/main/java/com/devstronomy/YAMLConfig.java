@@ -9,14 +9,27 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties
 public class YAMLConfig {
 
-    public String getName() {
-        return name;
+    private String nasaPlanetaryDataSheet;
+    private String pathLocalPython;
+
+    public String getPathLocalPython() {
+        return pathLocalPython;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setName(String pathLocalPython) {
+        this.pathLocalPython = pathLocalPython;
     }
 
-    private String name;
+    public void setPathLocalPython(String pathLocalPython) {
+        this.pathLocalPython = pathLocalPython;
+    }
+
+    public String getNasaPlanetaryDataSheet() {
+        return nasaPlanetaryDataSheet;
+    }
+
+    public void setNasaPlanetaryDataSheet(String nasaPlanetaryDataSheet) {
+        this.nasaPlanetaryDataSheet = nasaPlanetaryDataSheet;
+    }
 
 }

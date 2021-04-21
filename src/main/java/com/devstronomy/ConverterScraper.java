@@ -7,6 +7,7 @@ import org.jsoup.nodes.Node;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -26,7 +27,9 @@ final class ConverterScraper implements CommandLineRunner {
 
     private static final String PLANETS_FROM_SCRAPER_CSV_PATH = "./data/raw/";
     private static final String PLANETS_FROM_SCRAPER_CSV_NAME = "planetsFromScraper.csv";
-    private static final String PATH_TO_PLANETARY_NASA_TABLE = "https://nssdc.gsfc.nasa.gov/planetary/factsheet/";
+
+    @Autowired
+    private YAMLConfig myConfig;
 
     @Override
     public void run(String... args) {
@@ -49,7 +52,7 @@ final class ConverterScraper implements CommandLineRunner {
 
     private void scrape() {
         try {
-            Document doc = Jsoup.connect(PATH_TO_PLANETARY_NASA_TABLE).get();
+            Document doc = Jsoup.connect(myConfig.getNasaPlanetaryDataSheet()).get();
             System.out.printf("\nWebsite Title: %s\n\n", doc.getElementsByTag("h1"));
             Elements rows = doc.getElementsByTag("tr");
             int i = 0;
