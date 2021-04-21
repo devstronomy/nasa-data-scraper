@@ -1,9 +1,16 @@
 spring.datasource:
   driver-class-name: com.mysql.cj.jdbc.Driver
-  url: jdbc:mysql://localhost:3306/devstronomy?serverTimezone=UTC
+  url: jdbc:mysql://localhost:3306/devstronomy?useSSL=false
   username: root
   password: root
 
 logging.level:
   root: WARN
   com.devstronomy: INFO
+
+spring:
+  config:
+    activate:
+      on-profile: default
+pathLocalPython: "C:\\Users\\X5\\AppData\\Local\\Programs\\Python\\Python37\\python"
+nasaPlanetaryDataSheet: "https://nssdc.gsfc.nasa.gov/planetary/factsheet/"
