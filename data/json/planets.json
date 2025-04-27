@@ -21,7 +21,7 @@
     "surfacePressure": 0.0,
     "numberOfMoons": 0,
     "hasRingSystem": false,
-    "hasGlobalMagneticField": false
+    "hasGlobalMagneticField": true
   },
   {
     "id": 2,
@@ -69,7 +69,7 @@
     "surfacePressure": 1.0,
     "numberOfMoons": 1,
     "hasRingSystem": false,
-    "hasGlobalMagneticField": false
+    "hasGlobalMagneticField": true
   },
   {
     "id": 4,
@@ -116,8 +116,8 @@
     "meanTemperature": -110.0,
     "surfacePressure": null,
     "numberOfMoons": 79,
-    "hasRingSystem": false,
-    "hasGlobalMagneticField": false
+    "hasRingSystem": true,
+    "hasGlobalMagneticField": true
   },
   {
     "id": 6,
@@ -140,8 +140,8 @@
     "meanTemperature": -140.0,
     "surfacePressure": null,
     "numberOfMoons": 62,
-    "hasRingSystem": false,
-    "hasGlobalMagneticField": false
+    "hasRingSystem": true,
+    "hasGlobalMagneticField": true
   },
   {
     "id": 7,
@@ -164,8 +164,8 @@
     "meanTemperature": -195.0,
     "surfacePressure": null,
     "numberOfMoons": 27,
-    "hasRingSystem": false,
-    "hasGlobalMagneticField": false
+    "hasRingSystem": true,
+    "hasGlobalMagneticField": true
   },
   {
     "id": 8,
@@ -188,8 +188,8 @@
     "meanTemperature": -200.0,
     "surfacePressure": null,
     "numberOfMoons": 14,
-    "hasRingSystem": false,
-    "hasGlobalMagneticField": false
+    "hasRingSystem": true,
+    "hasGlobalMagneticField": true
   },
   {
     "id": 9,
@@ -210,9 +210,10 @@
     "orbitalEccentricity": 0.244,
     "obliquityToOrbit": 122.5,
     "meanTemperature": -225.0,
-    "surfacePressure": 1.0E-5,
+    "surfacePressure": 1.0e-5,
     "numberOfMoons": 5,
     "hasRingSystem": false,
     "hasGlobalMagneticField": false
   }
 ]
+
